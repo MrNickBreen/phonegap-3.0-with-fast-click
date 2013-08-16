@@ -4,6 +4,12 @@
     <title>Capture Photo</title>
 
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" src="js/fastclick.min.js"></script>
+    <script type="text/javascript">
+      window.addEventListener('load', function() {
+                              FastClick.attach(document.body);
+                              }, false);
+    </script>
     <script type="text/javascript" charset="utf-8">
 
     var pictureSource;   // picture source
