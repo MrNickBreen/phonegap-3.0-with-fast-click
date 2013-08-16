@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Storage Example</title>
+        
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+        <script type="text/javascript" src="js/fastclick.min.js"></script>
+        <script type="text/javascript">
+            window.addEventListener('load', function() {
+                                    FastClick.attach(document.body);
+                                    }, false);
+        </script>
+        <script type="text/javascript" charset="utf-8">
+            
+            // Wait for device API libraries to load
+            //
+            document.addEventListener("deviceready", onDeviceReady, false);
+            
+            // device APIs are available
+            //
+            function onDeviceReady() {
+                initStorage();
+                var permanentStorage = window.localStorage;
+                printEmployees(permanentStorage);
+            }
+            
+              function initStorage() {
+                  var tempStorage = window.sessionStorage;
+                  alert("checking session Storage:"+tempStorage.getItem("tempVar"));
+                  if (tempStorage.getItem("tempVar") === null) {
+                      alert("writing to session storage");
+                      tempStorage.setItem("tempVar", "testing");
+                  }
+                  
+                  var permanentStorage = window.localStorage;
+                  alert("checking permanent storage: "+permanentStorage.getItem("JSONList"));
+                  if (permanentStorage.getItem("JSONList") === null) {
+                      alert("writing to permanent storage");
+                      permanentStorage.setItem("JSONList", '{"employeesContainer": [{ "firstName":"John" , "lastName":"Doe" }, { "firstName":"Anna" , "lastName":"Smith" }, { "firstName":"Peter" , "lastName":"Jones" }]}');
+                  }
+              }
+                        
+            function printEmployees(permanentStorage){
+                var employees = JSON.parse(permanentStorage.getItem("JSONList"));
+                var employees = employees.employeesContainer;
+                for(var i=0; i < employees.length; i++) {
+                    var employeeContainer = document.createElement("li");
+                    document.getElementById('employees').appendChild(employeeContainer);
+                    var employeeFullName = employees[i].firstName + " " + employees[i].lastName;
+                    employeeContainer.innerHTML = employeeFullName;
+                }
+            }
+            
+            </script>
+    </head>
+    <body>
+        <a title="return to index" href="index.html">Return to index</a>
+        <br/>
+        <h1>Example</h1>
+        <ul id="employees"></div>
+    </body>
+</html>
